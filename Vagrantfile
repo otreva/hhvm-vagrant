@@ -33,7 +33,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     add-apt-repository "deb http://dl.hhvm.com/ubuntu $(lsb_release -sc) main"
     apt-get update
     apt-get install nginx -y --force-yes
-    apt-get install hhvm
+    apt-get install hhvm -y --force-yes
     apt-get install screen vim -y --force-yes
     debconf-set-selections <<< 'mysql-server-5.5 mysql-server/root_password password pa$$'
     debconf-set-selections <<< 'mysql-server-5.5 mysql-server/root_password_again password pa$$'
