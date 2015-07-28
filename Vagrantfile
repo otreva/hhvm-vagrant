@@ -17,15 +17,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provider "hyperv" do |hv, override|
-    vmname  = "HHVM"
-    memory = 2048
     override.ssh.username = "vagrant"
   end
 
   config.vm.provision "shell", inline: <<-shell
     apt-get update
     apt-get install python-software-properties  -y --force-yes
-    add-apt-repository ppa:mapnik/boost
     add-apt-repository ppa:nginx/stable
     # installs add-apt-repository
     apt-get install software-properties-common
@@ -35,9 +32,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     apt-get install nginx -y --force-yes
     apt-get install hhvm -y --force-yes
     apt-get install screen vim -y --force-yes
-    debconf-set-selections <<< 'mysql-server-5.5 mysql-server/root_password password pa$$'
-    debconf-set-selections <<< 'mysql-server-5.5 mysql-server/root_password_again password pa$$'
-    apt-get install mysql-server -y --force-yes
+    #debconf-set-selections <<< 'mysql-server-5.5 mysql-server/root_password password pa$$'
+    #debconf-set-selections <<< 'mysql-server-5.5 mysql-server/root_password_again password pa$$'
+    #apt-get install mysql-server -y --force-yes
 
     sudo chown vagrant /etc/hhvm
     sudo cp /vagrant/conf/config.hdf /etc/hhvm/my-config.hdf
@@ -48,6 +45,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     sudo service nginx restart
 
     hhvm -m daemon -c /etc/hhvm/my-php.ini -v Eval.EnableXHP=1
+
 
   shell
 end
